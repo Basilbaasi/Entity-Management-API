@@ -21,7 +21,8 @@ Vendor → Product → Course → Certification
 
 ```bash
 git clone https://github.com/Basilbaasi/Entity-Management-API.git
-cd backend_assignment
+cd Entity-Management-API
+
 2. Create virtual environment
 python -m venv env
 3. Activate environment
