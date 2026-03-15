@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from course_certification_mapping.models import CourseCertificationMapping
 
 from .models import Certification
 from .serializers import CertificationSerializer
@@ -10,11 +11,19 @@ from .serializers import CertificationSerializer
 class CertificationListCreateAPIView(APIView):
 
     def get(self, request):
-
         certifications = Certification.objects.all()
+    
+        course_id = request.query_params.get('course_id')
+    
+        if course_id:
+            certification_ids = CourseCertificationMapping.objects.filter(
+                course_id=course_id
+            ).values_list('certification_id', flat=True)
+    
+            certifications = certifications.filter(id__in=certification_ids)
+    
         serializer = CertificationSerializer(certifications, many=True)
-
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request):

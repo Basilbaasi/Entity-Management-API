@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from vendor_product_mapping.models import VendorProductMapping
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -9,6 +10,16 @@ from .serializers import ProductSerializer
 class ProductListCreateAPIView(APIView):
     def get(self, request):
         products = Product.objects.all()
+    
+        vendor_id = request.query_params.get('vendor_id')
+    
+        if vendor_id:
+            product_ids = VendorProductMapping.objects.filter(
+                vendor_id=vendor_id
+            ).values_list('product_id', flat=True)
+    
+            products = products.filter(id__in=product_ids)
+    
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Product
 
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -13,11 +14,18 @@ class ProductSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
         ]
-        read_only_fields = ('id', 'created_at', 'updated_at')
+        read_only_fields = ['id', 'created_at', 'updated_at']
 
     def validate_code(self, value):
         if not value:
             raise serializers.ValidationError("Code is required.")
-        if Product.objects.filter(code=value).exists():
+
+        queryset = Product.objects.filter(code=value)
+
+        if self.instance:
+            queryset = queryset.exclude(id=self.instance.id)
+
+        if queryset.exists():
             raise serializers.ValidationError("Product with this code already exists.")
+
         return value
