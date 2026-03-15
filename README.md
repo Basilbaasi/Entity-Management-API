@@ -20,7 +20,7 @@ Vendor → Product → Course → Certification
 ### 1. Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Basilbaasi/Entity-Management-API.git
 cd backend_assignment
 2. Create virtual environment
 python -m venv env
@@ -33,10 +33,13 @@ env\Scripts\activate
 Linux/Mac
 
 source env/bin/activate
+
 4. Install dependencies
 pip install -r requirements.txt
+
 5. Run migrations
 python manage.py migrate
+
 6. Start server
 python manage.py runserver
 
