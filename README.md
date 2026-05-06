@@ -1,247 +1,221 @@
 # Entity Management API
 
-A Django REST Framework based API for managing hierarchical entities:
+A modular Django REST Framework API for managing hierarchical business entities:
 
+**Vendor → Product → Course → Certification**
+
+The system supports full CRUD operations, relational mappings between entities, validation rules to protect data integrity, and interactive API documentation using Swagger.  
+This project was built as a backend-focused API assignment and is designed to be tested through Postman and browser-based API docs.
+
+---
+
+## Overview
+
+Entity Management API is built with Django and Django REST Framework to manage a structured hierarchy of related entities.  
+Each entity can be created, read, updated, and deleted independently, while mapping APIs connect them in a controlled and validated way.
+
+The application is designed to demonstrate:
+
+- REST API design
+- Modular backend architecture
+- Relationship handling between entities
+- Input validation and duplicate-prevention logic
+- API documentation and testing workflow
+
+---
+
+## Entity Flow
+
+```text
 Vendor → Product → Course → Certification
+Relationship Mappings
+Vendor → Product
+Product → Course
+Course → Certification
 
-The system provides CRUD operations for all entities, relational mappings between them, validation rules, and interactive API documentation using Swagger.
+Each mapping supports validation rules such as:
 
----
+preventing duplicate relationships
+enforcing only one primary mapping per parent entity
+validating foreign key references before saving data
 
-## Project Overview
+Features
 
-This project implements a modular backend architecture using Django and Django REST Framework. It manages relationships between different business entities while enforcing validation rules to maintain data integrity.
+CRUD APIs for all entities
+Relational mapping APIs between hierarchical entities
+Validation to prevent duplicate and invalid mappings
+Primary mapping constraint support
+Modular Django app structure
+Swagger-based interactive API documentation
+Postman-friendly request workflow
 
-Entities included:
+Tech Stack
 
-- Vendor
-- Product
-- Course
-- Certification
+Python
+Django
+Django REST Framework
+drf-yasg (Swagger documentation)
+SQLite (default database)
 
-Mappings implemented:
+Project Structure
 
-- Vendor → Product
-- Product → Course
-- Course → Certification
-
-Each mapping supports validation rules such as preventing duplicate relationships and enforcing a single primary mapping.
-
----
-
-## Features
-
-- CRUD APIs for all entities
-- Relational mappings between entities
-- Validation to prevent duplicate mappings
-- Primary mapping constraint for relationships
-- Modular Django app architecture
-- Interactive API documentation using Swagger
-
----
-
-## Tech Stack
-
-- Python
-- Django
-- Django REST Framework
-- drf-yasg (Swagger documentation)
-- SQLite (default database)
-
----
-
-## Project Structure
-
-
-Entity-Management-API
+Entity-Management-API/
 │
-├── entity_management # Main project configuration
-│
-├── vendor # Vendor entity APIs
-├── product # Product entity APIs
-├── course # Course entity APIs
-├── certification # Certification entity APIs
-│
-├── vendor_product_mapping
-├── product_course_mapping
-├── course_certification_mapping
-│
+├── entity_management/            # Main project configuration
+├── vendor/                       # Vendor entity APIs
+├── product/                      # Product entity APIs
+├── course/                       # Course entity APIs
+├── certification/                # Certification entity APIs
+├── vendor_product_mapping/       # Vendor → Product mapping APIs
+├── product_course_mapping/       # Product → Course mapping APIs
+├── course_certification_mapping/ # Course → Certification mapping APIs
 ├── manage.py
 ├── requirements.txt
-├── README.md
+└── README.md
 
+Setup Instructions
 
----
-
-## Setup Instructions
-
-### 1. Clone the repository
-
+1. Clone the repository
 
 git clone https://github.com/Basilbaasi/Entity-Management-API.git
-
 cd Entity-Management-API
 
-
-### 2. Create virtual environment
-
+2. Create a virtual environment
 
 python -m venv env
 
-
-### 3. Activate environment
+3. Activate the environment
 
 Windows
 
-
 env\Scripts\activate
-
 
 Linux / Mac
 
-
 source env/bin/activate
 
-
-### 4. Install dependencies
-
+4. Install dependencies
 
 pip install -r requirements.txt
 
-
-### 5. Run database migrations
-
+5. Run migrations
 
 python manage.py migrate
 
-
-### 6. Start the server
-
+6. Start the development server
 
 python manage.py runserver
 
-
-Server will start at:
-
+The server will run at:
 
 http://127.0.0.1:8000
 
 
----
-
-## API Documentation
+API Documentation
 
 Swagger UI
 
-
 http://127.0.0.1:8000/swagger/
-
 
 ReDoc
 
-
 http://127.0.0.1:8000/redoc/
 
+Both interfaces can be used to test and inspect the APIs directly from the browser.
 
-These interfaces allow testing all APIs directly from the browser.
+API Endpoints
 
----
+Vendor APIs
 
-## API Endpoints
-
-### Vendor APIs
-
-
-GET /api/vendors/
-POST /api/vendors/
-GET /api/vendors/{id}/
-PUT /api/vendors/{id}/
-PATCH /api/vendors/{id}/
+GET    /api/vendors/
+POST   /api/vendors/
+GET    /api/vendors/{id}/
+PUT    /api/vendors/{id}/
+PATCH  /api/vendors/{id}/
 DELETE /api/vendors/{id}/
 
+Product APIs
 
-### Product APIs
-
-
-GET /api/products/
-POST /api/products/
-GET /api/products/{id}/
-PUT /api/products/{id}/
-PATCH /api/products/{id}/
+GET    /api/products/
+POST   /api/products/
+GET    /api/products/{id}/
+PUT    /api/products/{id}/
+PATCH  /api/products/{id}/
 DELETE /api/products/{id}/
 
+Course APIs
 
-### Course APIs
-
-
-GET /api/courses/
-POST /api/courses/
-GET /api/courses/{id}/
-PUT /api/courses/{id}/
-PATCH /api/courses/{id}/
+GET    /api/courses/
+POST   /api/courses/
+GET    /api/courses/{id}/
+PUT    /api/courses/{id}/
+PATCH  /api/courses/{id}/
 DELETE /api/courses/{id}/
 
+Certification APIs
 
-### Certification APIs
-
-
-GET /api/certifications/
-POST /api/certifications/
-GET /api/certifications/{id}/
-PUT /api/certifications/{id}/
-PATCH /api/certifications/{id}/
+GET    /api/certifications/
+POST   /api/certifications/
+GET    /api/certifications/{id}/
+PUT    /api/certifications/{id}/
+PATCH  /api/certifications/{id}/
 DELETE /api/certifications/{id}/
 
+Mapping APIs
 
----
+Vendor → Product Mapping
 
-## Mapping APIs
-
-### Vendor → Product Mapping
-
-
-GET /api/vendor-product-mappings/
-POST /api/vendor-product-mappings/
-GET /api/vendor-product-mappings/{id}/
-PUT /api/vendor-product-mappings/{id}/
-PATCH /api/vendor-product-mappings/{id}/
+GET    /api/vendor-product-mappings/
+POST   /api/vendor-product-mappings/
+GET    /api/vendor-product-mappings/{id}/
+PUT    /api/vendor-product-mappings/{id}/
+PATCH  /api/vendor-product-mappings/{id}/
 DELETE /api/vendor-product-mappings/{id}/
 
+Product → Course Mapping
 
-### Product → Course Mapping
-
-
-GET /api/product-course-mappings/
-POST /api/product-course-mappings/
-GET /api/product-course-mappings/{id}/
-PUT /api/product-course-mappings/{id}/
-PATCH /api/product-course-mappings/{id}/
+GET    /api/product-course-mappings/
+POST   /api/product-course-mappings/
+GET    /api/product-course-mappings/{id}/
+PUT    /api/product-course-mappings/{id}/
+PATCH  /api/product-course-mappings/{id}/
 DELETE /api/product-course-mappings/{id}/
 
+Course → Certification Mapping
 
-### Course → Certification Mapping
-
-
-GET /api/course-certification-mappings/
-POST /api/course-certification-mappings/
-GET /api/course-certification-mappings/{id}/
-PUT /api/course-certification-mappings/{id}/
-PATCH /api/course-certification-mappings/{id}/
+GET    /api/course-certification-mappings/
+POST   /api/course-certification-mappings/
+GET    /api/course-certification-mappings/{id}/
+PUT    /api/course-certification-mappings/{id}/
+PATCH  /api/course-certification-mappings/{id}/
 DELETE /api/course-certification-mappings/{id}/
 
+Validation Rules
 
----
+Duplicate mappings between entities are not allowed
+Each parent entity can have only one primary_mapping=True
+Foreign key relationships must reference valid entities
 
-## Validation Rules
+These constraints ensure consistent and reliable hierarchical data handling.
 
-- Duplicate mappings between entities are not allowed
-- Each parent entity can have only one `primary_mapping=True`
-- Foreign key relationships must reference valid entities
+Example API Workflow
 
-These rules ensure data consistency within the hierarchy.
+Create a Vendor
+Create a Product linked to that Vendor
+Create a Course linked to the Product
+Create a Certification linked to the Course
+Validate the hierarchy through mapping APIs and Swagger/Postman
 
----
+This workflow demonstrates the full nested entity relationship supported by the system.
 
-## Author
+Notes
 
-Developed as part of a Django Backend Internship Assignment.
+This project is optimized for backend API testing
+Postman can be used to create, update, and validate entities
+No frontend is required for core functionality
+The repo is designed to demonstrate clean backend structure and REST API design
+
+Author
+
+Developed by Basil C K
+As part of a Django Backend Internship Assignment
